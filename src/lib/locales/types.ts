@@ -97,6 +97,15 @@ export type Messages = {
     reset: string;
     source: string;
     pictorialTitle: string;
+    timer: {
+      label: string;
+      congrats: string;
+      congratsBody: string;
+      xp: string;
+      gameOver: string;
+      gameOverBody: string;
+      tryAgain: string;
+    };
     chooseGame: string;
     backToGames: string;
     playGame: string;

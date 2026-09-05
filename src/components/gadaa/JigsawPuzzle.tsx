@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { RotateCcw, Sparkles } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { GameRound } from "./GameRound";
 import { SiteScene } from "./SiteScene";
 import { fill, useI18n } from "@/lib/i18n";
 import { jigsawPath, makeJigsaw, type JigsawPiece } from "@/lib/jigsaw";
@@ -118,8 +119,9 @@ export function JigsawPuzzle() {
   const won = tray.length === 0 && placed.length === pieces.length;
 
   function reset() {
-    setProgress((current) => ({ ...current, [photoId]: starter }));
+    setProgress({});
     setDrag(null);
+    setHoverSlot(null);
   }
 
   function selectScene(id: MapSiteType) {
@@ -135,6 +137,7 @@ export function JigsawPuzzle() {
   }
 
   return (
+    <GameRound id="jigsaw" won={won} xp={XP} onReset={reset}>
     <section className="mx-auto max-w-lg">
       <p className="text-sm text-muted-foreground">{g.jigsawIntro}</p>
       <div className="mt-3 grid grid-cols-3 gap-2">
@@ -246,21 +249,15 @@ export function JigsawPuzzle() {
 
       <div className="mt-3 flex items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">{fill(g.jigsawPieces, { n: tray.length })}</p>
-        {won ? (
-          <p className="animate-rise flex items-center gap-1.5 text-xs font-semibold text-gold">
-            <Sparkles className="h-3.5 w-3.5" />
-            {fill(g.jigsawWon, { xp: XP })}
-          </p>
-        ) : (
-          <button
-            onClick={reset}
-            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          >
-            <RotateCcw className="h-3.5 w-3.5" /> {g.jigsawReset}
-          </button>
-        )}
+        <button
+          onClick={reset}
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <RotateCcw className="h-3.5 w-3.5" /> {g.jigsawReset}
+        </button>
       </div>
       </div>
     </section>
+    </GameRound>
   );
 }

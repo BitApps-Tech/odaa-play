@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -19,6 +19,7 @@ import {
 import { Page } from "@/components/gadaa/Page";
 import { PictorialGames } from "@/components/gadaa/PictorialGames";
 import { FactCheck } from "@/components/gadaa/FactCheck";
+import { GameRound } from "@/components/gadaa/GameRound";
 import { WordSearch } from "@/components/gadaa/WordSearch";
 import { puzzles, trivia } from "@/lib/gadaa-data";
 import { useI18n } from "@/lib/i18n";
@@ -74,17 +75,23 @@ function WordBuilder({
   tapTiles,
   solvedLabel,
   resetLabel,
+  onSolved,
 }: {
   p: (typeof puzzles)[number];
   prompt: string;
   tapTiles: string;
   solvedLabel: string;
   resetLabel: string;
+  onSolved: (solved: boolean) => void;
 }) {
   const [picked, setPicked] = useState<string[]>([]);
   const built = picked.join(p.scrambled.some((s) => s.length > 4) ? " " : "");
   const solved = built.replace(/\s+/g, "") === p.answer.replace(/\s+/g, "");
   const pool = p.scrambled.filter((s) => !picked.includes(s));
+
+  useEffect(() => {
+    onSolved(solved);
+  }, [solved, onSolved]);
 
   return (
     <div className="glass hover-lift rounded-2xl p-5">
@@ -130,19 +137,37 @@ function WordBuilder({
 
 function WordGames() {
   const { t } = useI18n();
+  const [tick, setTick] = useState(0);
+  const [done, setDone] = useState<Record<string, boolean>>({});
+  const won = puzzles.every((p) => done[p.id]);
+  const xp = puzzles.reduce((sum, p) => sum + p.xp, 0);
+
   return (
-    <div className="grid gap-5 md:grid-cols-2">
-      {puzzles.map((p) => (
-        <WordBuilder
-          key={p.id}
-          p={p}
-          prompt={t.quests.puzzles[p.id] ?? p.id}
-          tapTiles={t.quests.tapTiles}
-          solvedLabel={t.quests.solved}
-          resetLabel={t.quests.reset}
-        />
-      ))}
-    </div>
+    <GameRound
+      id="words"
+      won={won}
+      xp={xp}
+      onReset={() => {
+        setDone({});
+        setTick((n) => n + 1);
+      }}
+    >
+      <div className="grid gap-5 md:grid-cols-2">
+        {puzzles.map((p) => (
+          <WordBuilder
+            key={`${p.id}-${tick}`}
+            p={p}
+            prompt={t.quests.puzzles[p.id] ?? p.id}
+            tapTiles={t.quests.tapTiles}
+            solvedLabel={t.quests.solved}
+            resetLabel={t.quests.reset}
+            onSolved={(solved) =>
+              setDone((current) => (current[p.id] === solved ? current : { ...current, [p.id]: solved }))
+            }
+          />
+        ))}
+      </div>
+    </GameRound>
   );
 }
 
@@ -150,8 +175,11 @@ function Trivia() {
   const { t } = useI18n();
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const categories = [...new Set(t.quests.triviaItems.map((item) => item.category))];
+  const won = t.quests.triviaItems.every((_, i) => answers[i] !== undefined);
+  const xp = t.quests.triviaItems.reduce((sum, _, i) => sum + (answers[i] === trivia[i]?.answer ? 10 : 0), 0);
 
   return (
+    <GameRound id="trivia" won={won} xp={xp} onReset={() => setAnswers({})}>
     <div className="space-y-8">
       {categories.map((category) => {
         const items = t.quests.triviaItems
@@ -204,6 +232,7 @@ function Trivia() {
         );
       })}
     </div>
+    </GameRound>
   );
 }
 

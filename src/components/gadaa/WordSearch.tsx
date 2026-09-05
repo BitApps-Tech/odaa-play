@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { RotateCcw, Sparkles } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { GameRound } from "./GameRound";
 import { fill, useI18n } from "@/lib/i18n";
 import {
   cellsKey,
@@ -84,6 +85,7 @@ export function WordSearch() {
   }
 
   return (
+    <GameRound id="search" won={won} xp={WORD_SEARCH_XP} onReset={reset}>
     <section className="mx-auto max-w-lg">
       <p className="text-sm text-muted-foreground">{g.intro}</p>
 
@@ -171,20 +173,14 @@ export function WordSearch() {
         <p className="text-xs text-muted-foreground">
           {fill(g.found, { n: found.length, total: puzzle.placed.length })}
         </p>
-        {won ? (
-          <p className="animate-rise flex items-center gap-1.5 text-xs font-semibold text-gold">
-            <Sparkles className="h-3.5 w-3.5" />
-            {fill(g.won, { xp: WORD_SEARCH_XP })}
-          </p>
-        ) : (
-          <button
-            onClick={reset}
-            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          >
-            <RotateCcw className="h-3.5 w-3.5" /> {g.reset}
-          </button>
-        )}
+        <button
+          onClick={reset}
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <RotateCcw className="h-3.5 w-3.5" /> {g.reset}
+        </button>
       </div>
     </section>
+    </GameRound>
   );
 }

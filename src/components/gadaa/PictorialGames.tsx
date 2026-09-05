@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Sparkles } from "lucide-react";
+import { GameRound } from "./GameRound";
 import { JigsawPuzzle } from "./JigsawPuzzle";
 import { MemoryMatch } from "./MemoryMatch";
 import { PicturePick } from "./PicturePick";
@@ -21,6 +21,8 @@ export function PictorialGames({ kind }: { kind: PictorialKind }) {
   const g = t.quests.pictorial;
   const [pictureAnswers, setPictureAnswers] = useState<Record<string, MapSiteType>>({});
   const [oddChoice, setOddChoice] = useState<number | null>(null);
+  const [memoryWon, setMemoryWon] = useState(false);
+  const [memoryTick, setMemoryTick] = useState(0);
 
   const pictureRounds = useMemo(
     () =>
@@ -44,7 +46,9 @@ export function PictorialGames({ kind }: { kind: PictorialKind }) {
   if (kind === "jigsaw") return <JigsawPuzzle />;
 
   if (kind === "picture") {
+    const won = pictureRounds.every((round) => pictureAnswers[round.type] === round.type);
     return (
+      <GameRound id="picture" won={won} xp={120} onReset={() => setPictureAnswers({})}>
       <section>
         <h3 className="text-lg font-bold">{g.pictureQuiz}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{g.pictureIntro}</p>
@@ -66,11 +70,14 @@ export function PictorialGames({ kind }: { kind: PictorialKind }) {
           ))}
         </div>
       </section>
+      </GameRound>
     );
   }
 
   if (kind === "odd") {
+    const won = oddChoice === oddIndex;
     return (
+      <GameRound id="odd" won={won} xp={20} onReset={() => setOddChoice(null)}>
       <section className="glass rounded-2xl p-5">
         <h3 className="text-lg font-bold">{g.oddTitle}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{g.oddPrompt}</p>
@@ -95,27 +102,37 @@ export function PictorialGames({ kind }: { kind: PictorialKind }) {
             );
           })}
         </div>
-        {oddChoice !== null && (
-          <p className="animate-rise mt-3 flex items-center gap-1.5 text-xs font-semibold text-gold">
-            <Sparkles className="h-3.5 w-3.5" />
-            {oddChoice === oddIndex ? fill(t.map.correct, { xp: 20 }) : t.map.wrong}
-          </p>
+        {oddChoice !== null && !won && (
+          <p className="mt-3 text-xs font-semibold text-muted-foreground">{t.map.wrong}</p>
         )}
       </section>
+      </GameRound>
     );
   }
 
   return (
-    <section className="glass rounded-2xl p-5">
-      <h3 className="text-lg font-bold">{g.memoryTitle}</h3>
-      <MemoryMatch
-        types={QUEST_MEMORY_TYPES}
-        seed="quests-memory"
-        labels={t.map.types}
-        prompt={g.memoryPrompt}
-        wonLabel={g.memoryWon}
-        xp={50}
-      />
-    </section>
+    <GameRound
+      id="memory"
+      won={memoryWon}
+      xp={50}
+      onReset={() => {
+        setMemoryWon(false);
+        setMemoryTick((n) => n + 1);
+      }}
+    >
+      <section className="glass rounded-2xl p-5">
+        <h3 className="text-lg font-bold">{g.memoryTitle}</h3>
+        <MemoryMatch
+          key={memoryTick}
+          types={QUEST_MEMORY_TYPES}
+          seed="quests-memory"
+          labels={t.map.types}
+          prompt={g.memoryPrompt}
+          wonLabel={g.memoryWon}
+          xp={50}
+          onWon={() => setMemoryWon(true)}
+        />
+      </section>
+    </GameRound>
   );
 }

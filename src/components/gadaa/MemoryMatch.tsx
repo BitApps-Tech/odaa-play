@@ -13,6 +13,7 @@ export function MemoryMatch({
   prompt,
   wonLabel,
   xp,
+  onWon,
 }: {
   types: MapSiteType[];
   seed: string;
@@ -20,6 +21,7 @@ export function MemoryMatch({
   prompt: string;
   wonLabel: string;
   xp: number;
+  onWon?: () => void;
 }) {
   const deck = useMemo<Card[]>(() => {
     const pairs = types.flatMap((type) => [
@@ -40,6 +42,10 @@ export function MemoryMatch({
   }, [seed]);
 
   const won = matched.length === deck.length;
+
+  useEffect(() => {
+    if (won) onWon?.();
+  }, [won, onWon]);
 
   function flip(card: Card) {
     if (lock || won || open.includes(card.key) || matched.includes(card.key)) return;
@@ -88,7 +94,7 @@ export function MemoryMatch({
           );
         })}
       </div>
-      {won && (
+      {won && !onWon && (
         <p className="animate-rise mt-3 flex items-center gap-1.5 text-xs font-semibold text-gold">
           <Sparkles className="h-3.5 w-3.5" />
           {wonLabel.replace("{xp}", String(xp))}
