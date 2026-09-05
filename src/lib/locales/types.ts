@@ -95,6 +95,42 @@ export type Messages = {
     solved: string;
     reset: string;
     source: string;
+    pictorialTitle: string;
+    chooseGame: string;
+    backToGames: string;
+    playGame: string;
+    categories: {
+      language: string;
+      languageBlurb: string;
+      pictures: string;
+      picturesBlurb: string;
+      trivia: string;
+      triviaBlurb: string;
+    };
+    gameBlurbs: {
+      words: string;
+      jigsaw: string;
+      picture: string;
+      odd: string;
+      memory: string;
+      trivia: string;
+    };
+    pictorial: {
+      pictureQuiz: string;
+      pictureIntro: string;
+      pictureQuestion: string;
+      oddTitle: string;
+      oddPrompt: string;
+      memoryTitle: string;
+      memoryPrompt: string;
+      memoryWon: string;
+      jigsawTitle: string;
+      jigsawIntro: string;
+      jigsawHint: string;
+      jigsawPieces: string;
+      jigsawWon: string;
+      jigsawReset: string;
+    };
     puzzles: Record<string, string>;
     triviaItems: { category: string; question: string; options: [string, string, string] }[];
   };
@@ -111,6 +147,22 @@ export type Messages = {
     openFullMap: string;
     panHint: string;
     noResults: string;
+    pickSite: string;
+    games: {
+      title: string;
+      forSite: string;
+      intro: string;
+      tabs: { quiz: string; puzzle: string; pictures: string; memory: string };
+      typeQuestion: string;
+      zoneQuestion: string;
+      pictureQuestion: string;
+      puzzlePrompt: string;
+      tapTiles: string;
+      solved: string;
+      reset: string;
+      memoryPrompt: string;
+      memoryWon: string;
+    };
     types: Record<string, string>;
     places: Record<
       string,

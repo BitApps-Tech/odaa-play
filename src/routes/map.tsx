@@ -1,14 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState, useEffect } from "react";
-import { ExternalLink, MapPin, Search, Sparkles } from "lucide-react";
+import { ExternalLink, MapPin, Search } from "lucide-react";
 import { Page } from "@/components/gadaa/Page";
-import { destinations } from "@/lib/gadaa-data";
+import { SiteGames } from "@/components/gadaa/SiteGames";
 import { fill, useI18n } from "@/lib/i18n";
 import {
   mapSiteTypes,
   mapSites,
   oromiaTouristMap,
-  quizSiteId,
   touristMapEmbed,
   type MapSite,
   type MapSiteType,
@@ -43,12 +42,10 @@ function TourismMap() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState<MapSiteType | "all">("all");
   const [activeId, setActiveId] = useState<string | null>(siteParam ?? null);
-  const [choice, setChoice] = useState<number | null>(null);
 
   useEffect(() => {
     if (siteParam) {
       setActiveId(siteParam);
-      setChoice(null);
     }
   }, [siteParam]);
 
@@ -64,14 +61,10 @@ function TourismMap() {
   }, [query, type]);
 
   const active = mapSites.find((s) => s.id === activeId) ?? null;
-  const quizId = active ? quizSiteId(active.name) : null;
-  const quizDest = quizId ? destinations.find((d) => d.id === quizId) : undefined;
-  const quizCopy = quizId ? t.map.places[quizId] : undefined;
   const embedSrc = touristMapEmbed(active?.lat, active?.lng, active ? 11 : 7);
 
   function selectSite(id: string) {
     setActiveId(id);
-    setChoice(null);
     void navigate({ to: "/map", search: { site: id }, replace: true });
   }
 
@@ -178,46 +171,12 @@ function TourismMap() {
           </p>
           <h2 className="mt-1 text-2xl font-bold">{active.name}</h2>
           {active.summary && <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{active.summary}</p>}
-
-          {quizCopy && quizDest && (
-            <div className="mt-6 max-w-xl rounded-2xl bg-secondary/60 p-4">
-              <p className="text-sm font-semibold">{quizCopy.quiz}</p>
-              <div className="mt-3 grid gap-2">
-                {quizCopy.options.map((o, i) => {
-                  const state =
-                    choice === null
-                      ? "idle"
-                      : i === quizDest.answer
-                        ? "right"
-                        : i === choice
-                          ? "wrong"
-                          : "idle";
-                  return (
-                    <button
-                      key={o}
-                      onClick={() => setChoice(i)}
-                      className={`rounded-xl px-3.5 py-2.5 text-left text-sm transition-colors ${
-                        state === "right"
-                          ? "bg-gold/20 text-gold ring-1 ring-gold/60"
-                          : state === "wrong"
-                            ? "bg-primary/20 ring-1 ring-primary/60"
-                            : "bg-background/60 hover:bg-accent"
-                      }`}
-                    >
-                      {o}
-                    </button>
-                  );
-                })}
-              </div>
-              {choice !== null && (
-                <p className="animate-rise mt-3 flex items-center gap-1.5 text-xs font-semibold text-gold">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  {choice === quizDest.answer ? fill(t.map.correct, { xp: quizDest.xp }) : t.map.wrong}
-                </p>
-              )}
-            </div>
-          )}
+          <SiteGames key={active.id} site={active} />
         </section>
+      )}
+
+      {!active && (
+        <section className="glass rounded-3xl p-6 text-sm text-muted-foreground">{t.map.pickSite}</section>
       )}
     </Page>
   );

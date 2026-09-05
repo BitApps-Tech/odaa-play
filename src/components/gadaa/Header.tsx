@@ -12,7 +12,6 @@ const linkKeys = [
   { to: "/quests", key: "quests" },
   { to: "/map", key: "map" },
   { to: "/heritage", key: "heritage" },
-  { to: "/leaderboard", key: "leaderboard" },
   { to: "/ai-guide", key: "aiGuide" },
 ] as const;
 

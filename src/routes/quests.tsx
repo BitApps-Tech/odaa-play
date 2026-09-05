@@ -1,16 +1,64 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, RotateCcw, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Check,
+  ImageIcon,
+  Languages,
+  Layers,
+  Puzzle,
+  RotateCcw,
+  ScanSearch,
+  Sparkles,
+  Type,
+} from "lucide-react";
 import { Page } from "@/components/gadaa/Page";
+import { PictorialGames } from "@/components/gadaa/PictorialGames";
 import { puzzles, trivia } from "@/lib/gadaa-data";
 import { useI18n } from "@/lib/i18n";
+import {
+  parseQuestGame,
+  questCategories,
+  type QuestCategoryId,
+  type QuestGameId,
+} from "@/lib/quest-games";
 
 export const Route = createFileRoute("/quests")({
   head: () => ({
     meta: [{ title: "Quests — Odaa Play" }],
   }),
+  validateSearch: (search: Record<string, unknown>): { game?: QuestGameId } => {
+    const game = parseQuestGame(search["game"]);
+    return game ? { game } : {};
+  },
   component: Quests,
 });
+
+const categoryIcons: Record<QuestCategoryId, typeof Languages> = {
+  language: Languages,
+  pictures: ImageIcon,
+  trivia: BookOpen,
+};
+
+const gameIcons: Record<QuestGameId, typeof Puzzle> = {
+  words: Type,
+  jigsaw: Puzzle,
+  picture: ImageIcon,
+  odd: ScanSearch,
+  memory: Layers,
+  trivia: BookOpen,
+};
+
+function gameTitle(t: ReturnType<typeof useI18n>["t"], id: QuestGameId) {
+  if (id === "words") return t.quests.wordBuilder;
+  if (id === "jigsaw") return t.quests.pictorial.jigsawTitle;
+  if (id === "picture") return t.quests.pictorial.pictureQuiz;
+  if (id === "odd") return t.quests.pictorial.oddTitle;
+  if (id === "memory") return t.quests.pictorial.memoryTitle;
+  return t.quests.trivia;
+}
 
 function WordBuilder({
   p,
@@ -68,6 +116,24 @@ function WordBuilder({
           </button>
         )}
       </div>
+    </div>
+  );
+}
+
+function WordGames() {
+  const { t } = useI18n();
+  return (
+    <div className="grid gap-5 md:grid-cols-2">
+      {puzzles.map((p) => (
+        <WordBuilder
+          key={p.id}
+          p={p}
+          prompt={t.quests.puzzles[p.id] ?? p.id}
+          tapTiles={t.quests.tapTiles}
+          solvedLabel={t.quests.solved}
+          resetLabel={t.quests.reset}
+        />
+      ))}
     </div>
   );
 }
@@ -133,33 +199,92 @@ function Trivia() {
   );
 }
 
-function Quests() {
+function GamePicker() {
   const { t } = useI18n();
 
   return (
-    <Page eyebrow={t.quests.eyebrow} title={t.quests.title} intro={t.quests.intro} source={t.quests.source}>
-      <section>
-        <h2 className="text-xl font-bold">{t.quests.wordBuilder}</h2>
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          {puzzles.map((p) => (
-            <WordBuilder
-              key={p.id}
-              p={p}
-              prompt={t.quests.puzzles[p.id] ?? p.id}
-              tapTiles={t.quests.tapTiles}
-              solvedLabel={t.quests.solved}
-              resetLabel={t.quests.reset}
-            />
-          ))}
-        </div>
-      </section>
+    <div className="space-y-10">
+      <h2 className="text-xl font-bold">{t.quests.chooseGame}</h2>
+      {questCategories.map((category) => {
+        const CategoryIcon = categoryIcons[category.id];
+        return (
+          <section key={category.id}>
+            <div className="mb-4 flex items-start gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/40">
+                <CategoryIcon className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="text-xl font-bold">{t.quests.categories[category.id]}</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {category.id === "language"
+                    ? t.quests.categories.languageBlurb
+                    : category.id === "pictures"
+                      ? t.quests.categories.picturesBlurb
+                      : t.quests.categories.triviaBlurb}
+                </p>
+              </div>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {category.games.map((id) => {
+                const Icon = gameIcons[id];
+                return (
+                  <Link
+                    key={id}
+                    to="/quests"
+                    search={{ game: id }}
+                    className="glass hover-lift group flex flex-col rounded-2xl p-5"
+                  >
+                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-secondary text-foreground">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="mt-4 text-lg font-bold">{gameTitle(t, id)}</h3>
+                    <p className="mt-2 flex-1 text-sm text-muted-foreground">{t.quests.gameBlurbs[id]}</p>
+                    <p className="mt-5 flex items-center justify-between text-xs font-semibold text-gold">
+                      {t.quests.playGame}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
 
-      <section>
-        <h2 className="text-xl font-bold">{t.quests.trivia}</h2>
-        <div className="mt-5">
-          <Trivia />
-        </div>
-      </section>
+function Quests() {
+  const { t } = useI18n();
+  const { game } = Route.useSearch();
+
+  return (
+    <Page eyebrow={t.quests.eyebrow} title={t.quests.title} intro={t.quests.intro} source={t.quests.source}>
+      {game ? (
+        <section>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <Link
+              to="/quests"
+              search={{}}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" /> {t.quests.backToGames}
+            </Link>
+            <h2 className="text-lg font-bold">{gameTitle(t, game)}</h2>
+          </div>
+          <div className="mt-5">
+            {game === "words" ? (
+              <WordGames />
+            ) : game === "trivia" ? (
+              <Trivia />
+            ) : (
+              <PictorialGames kind={game} />
+            )}
+          </div>
+        </section>
+      ) : (
+        <GamePicker />
+      )}
     </Page>
   );
 }
