@@ -63,6 +63,19 @@ export const trivia = [
   { answer: 0 },
 ];
 
+export const FACT_CHECK_XP = 10;
+
+export const factChecks = [
+  { id: "gada8", truth: true },
+  { id: "unesco", truth: true },
+  { id: "sofPalace", truth: false },
+  { id: "nyala", truth: true },
+  { id: "yayo", truth: true },
+  { id: "melkaMall", truth: false },
+  { id: "jimma", truth: true },
+  { id: "capital", truth: false },
+] as const;
+
 export const destinations = [
   { id: "sof-omar", x: 72, y: 68, answer: 0, xp: 60 },
   { id: "bale", x: 66, y: 78, answer: 1, xp: 55 },

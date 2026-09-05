@@ -90,6 +90,7 @@ export type Messages = {
     title: string;
     intro: string;
     wordBuilder: string;
+    wordSearchTitle: string;
     trivia: string;
     tapTiles: string;
     solved: string;
@@ -109,11 +110,31 @@ export type Messages = {
     };
     gameBlurbs: {
       words: string;
+      search: string;
       jigsaw: string;
       picture: string;
       odd: string;
       memory: string;
       trivia: string;
+      facts: string;
+    };
+    factCheckTitle: string;
+    factCheck: {
+      intro: string;
+      trueLabel: string;
+      falseLabel: string;
+      next: string;
+      progress: string;
+      score: string;
+      reset: string;
+    };
+    factCheckItems: Record<string, string>;
+    wordSearch: {
+      intro: string;
+      list: string;
+      found: string;
+      won: string;
+      reset: string;
     };
     pictorial: {
       pictureQuiz: string;

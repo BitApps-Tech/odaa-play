@@ -3,8 +3,10 @@ import { useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
+  BadgeCheck,
   BookOpen,
   Check,
+  Grid3x3,
   ImageIcon,
   Languages,
   Layers,
@@ -16,6 +18,8 @@ import {
 } from "lucide-react";
 import { Page } from "@/components/gadaa/Page";
 import { PictorialGames } from "@/components/gadaa/PictorialGames";
+import { FactCheck } from "@/components/gadaa/FactCheck";
+import { WordSearch } from "@/components/gadaa/WordSearch";
 import { puzzles, trivia } from "@/lib/gadaa-data";
 import { useI18n } from "@/lib/i18n";
 import {
@@ -44,19 +48,23 @@ const categoryIcons: Record<QuestCategoryId, typeof Languages> = {
 
 const gameIcons: Record<QuestGameId, typeof Puzzle> = {
   words: Type,
+  search: Grid3x3,
   jigsaw: Puzzle,
   picture: ImageIcon,
   odd: ScanSearch,
   memory: Layers,
   trivia: BookOpen,
+  facts: BadgeCheck,
 };
 
 function gameTitle(t: ReturnType<typeof useI18n>["t"], id: QuestGameId) {
   if (id === "words") return t.quests.wordBuilder;
+  if (id === "search") return t.quests.wordSearchTitle;
   if (id === "jigsaw") return t.quests.pictorial.jigsawTitle;
   if (id === "picture") return t.quests.pictorial.pictureQuiz;
   if (id === "odd") return t.quests.pictorial.oddTitle;
   if (id === "memory") return t.quests.pictorial.memoryTitle;
+  if (id === "facts") return t.quests.factCheckTitle;
   return t.quests.trivia;
 }
 
@@ -275,8 +283,12 @@ function Quests() {
           <div className="mt-5">
             {game === "words" ? (
               <WordGames />
+            ) : game === "search" ? (
+              <WordSearch />
             ) : game === "trivia" ? (
               <Trivia />
+            ) : game === "facts" ? (
+              <FactCheck />
             ) : (
               <PictorialGames kind={game} />
             )}
