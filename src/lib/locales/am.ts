@@ -4,11 +4,12 @@ export const am: Messages = {
     brand: {
       name: "Odaa Play",
       bureau: "የኦሮሚያ ባህልና ቱሪዝም ቢሮ",
+      slogan: "Learn, play, and win!",
       opening: "Odaa Play እየተከፈተ ነው…",
     },
     nav: {
       dashboard: "ዳሽቦርድ",
-      quests: "ተልእኮዎች",
+      quests: "ጨዋታዎች",
       map: "የቱሪዝም ካርታ",
       heritage: "ቅርስ",
       leaderboard: "ደረጃ ሰሌዳ",
@@ -109,8 +110,8 @@ export const am: Messages = {
       featured: "የተመረጠ ተልእኮ",
     },
     quests: {
-      eyebrow: "ሞጁል 01",
-      title: "ቋንቋ እና የOCTB ጥያቄ",
+      eyebrow: "Play now",
+      title: "Games",
       intro:
         "የአፋን ኦሮሞ ቃላትን ያሰባስቡ፣ ከዚያም ጥያቄዎችን እንደ ኦፊሴላዊው ቢሮ ድረ-ገጽ ኦሮሚያን እንደሚከፍለው ይመልሱ፦ የGada ባህል፣ የተፈጥሮ መስህቦች እና ታሪካዊ እውነታዎች።",
       wordBuilder: "ቃል-ገንቢ ካርዶች",

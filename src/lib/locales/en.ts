@@ -4,11 +4,12 @@ export const en: Messages = {
     brand: {
       name: "Odaa Play",
       bureau: "Oromia Culture & Tourism Bureau",
+      slogan: "Learn, play, and win!",
       opening: "Opening Odaa Play…",
     },
     nav: {
       dashboard: "Dashboard",
-      quests: "Quests",
+      quests: "Games",
       map: "Tourism Map",
       heritage: "Heritage",
       leaderboard: "Leaderboard",
@@ -109,8 +110,8 @@ export const en: Messages = {
       featured: "Featured quest",
     },
     quests: {
-      eyebrow: "Module 01",
-      title: "Language & OCTB Trivia",
+      eyebrow: "Play now",
+      title: "Games",
       intro: "Choose a game type first, then play. Practice Afan Oromo, Oromia picture games, or OCTB trivia.",
       wordBuilder: "Word builder",
       wordSearchTitle: "Word search",

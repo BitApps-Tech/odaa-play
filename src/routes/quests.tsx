@@ -2,23 +2,17 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
-  ArrowRight,
-  BadgeCheck,
   BookOpen,
   Check,
-  Grid3x3,
   ImageIcon,
   Languages,
-  Layers,
-  Puzzle,
   RotateCcw,
-  ScanSearch,
   Sparkles,
-  Type,
 } from "lucide-react";
 import { Page } from "@/components/gadaa/Page";
 import { PictorialGames } from "@/components/gadaa/PictorialGames";
 import { FactCheck } from "@/components/gadaa/FactCheck";
+import { GameCard } from "@/components/gadaa/GameCard";
 import { GameRound } from "@/components/gadaa/GameRound";
 import { WordSearch } from "@/components/gadaa/WordSearch";
 import { puzzles, trivia } from "@/lib/gadaa-data";
@@ -32,7 +26,7 @@ import {
 
 export const Route = createFileRoute("/quests")({
   head: () => ({
-    meta: [{ title: "Quests — Odaa Play" }],
+    meta: [{ title: "Games — Odaa Play" }],
   }),
   validateSearch: (search: Record<string, unknown>): { game?: QuestGameId } => {
     const game = parseQuestGame(search["game"]);
@@ -45,17 +39,6 @@ const categoryIcons: Record<QuestCategoryId, typeof Languages> = {
   language: Languages,
   pictures: ImageIcon,
   trivia: BookOpen,
-};
-
-const gameIcons: Record<QuestGameId, typeof Puzzle> = {
-  words: Type,
-  search: Grid3x3,
-  jigsaw: Puzzle,
-  picture: ImageIcon,
-  odd: ScanSearch,
-  memory: Layers,
-  trivia: BookOpen,
-  facts: BadgeCheck,
 };
 
 function gameTitle(t: ReturnType<typeof useI18n>["t"], id: QuestGameId) {
@@ -261,28 +244,16 @@ function GamePicker() {
                 </p>
               </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {category.games.map((id) => {
-                const Icon = gameIcons[id];
-                return (
-                  <Link
-                    key={id}
-                    to="/quests"
-                    search={{ game: id }}
-                    className="glass hover-lift group flex flex-col rounded-2xl p-5"
-                  >
-                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-secondary text-foreground">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-4 text-lg font-bold">{gameTitle(t, id)}</h3>
-                    <p className="mt-2 flex-1 text-sm text-muted-foreground">{t.quests.gameBlurbs[id]}</p>
-                    <p className="mt-5 flex items-center justify-between text-xs font-semibold text-gold">
-                      {t.quests.playGame}
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </p>
-                  </Link>
-                );
-              })}
+            <div
+              className={
+                category.id === "pictures"
+                  ? "grid gap-4 md:grid-cols-2 lg:grid-cols-4"
+                  : "grid gap-4 md:grid-cols-2"
+              }
+            >
+              {category.games.map((id) => (
+                <GameCard key={id} id={id} title={gameTitle(t, id)} blurb={t.quests.gameBlurbs[id]} />
+              ))}
             </div>
           </section>
         );

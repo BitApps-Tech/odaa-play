@@ -8,7 +8,6 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useI18n } from "@/lib/i18n";
 
 const linkKeys = [
-  { to: "/", key: "dashboard" },
   { to: "/quests", key: "quests" },
   { to: "/map", key: "map" },
   { to: "/heritage", key: "heritage" },
@@ -21,24 +20,22 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40">
-      <div className="flex h-1">
-        <span className="flex-1 bg-[oklch(0.14_0.01_265)]" />
-        <span className="flex-1 bg-primary" />
+      <div className="flex h-1" aria-hidden>
+        <span className="flex-1 bg-black" />
+        <span className="flex-1 bg-[#CE1126]" />
         <span className="flex-1 bg-white" />
       </div>
 
       <div className="glass-strong shadow-panel">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-          <Link to="/" className="flex min-w-0 items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full bg-white shadow-panel ring-1 ring-border">
-              <OdaaLogo className="h-11 w-11" />
-            </span>
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-2.5 sm:px-6">
+          <Link to="/quests" search={{}} className="flex min-w-0 items-center gap-3">
+            <OdaaLogo className="h-16 w-14 shrink-0 sm:h-[4.75rem] sm:w-16" />
             <span className="min-w-0">
-              <span className="block truncate font-display text-lg leading-tight font-bold">
+              <span className="block truncate font-display text-lg leading-tight font-bold text-gold sm:text-xl">
                 {t.brand.name}
               </span>
-              <span className="block truncate text-[11px] tracking-wide text-muted-foreground uppercase">
-                {t.brand.bureau}
+              <span className="block truncate text-[10px] tracking-[0.16em] text-primary uppercase sm:text-[11px]">
+                {t.brand.slogan}
               </span>
             </span>
           </Link>
@@ -48,10 +45,11 @@ export function Header() {
               <Link
                 key={l.to}
                 to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
+                search={l.to === "/quests" ? {} : undefined}
+                activeOptions={{ exact: l.to === "/quests" }}
                 activeProps={{
                   className:
-                    "bg-primary/15 text-foreground ring-1 ring-primary/50 shadow-glow",
+                    "bg-primary/15 text-foreground ring-1 ring-gold/50 shadow-glow",
                 }}
                 className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
@@ -80,8 +78,9 @@ export function Header() {
               <Link
                 key={l.to}
                 to={l.to}
+                search={l.to === "/quests" ? {} : undefined}
                 onClick={() => setOpen(false)}
-                activeOptions={{ exact: l.to === "/" }}
+                activeOptions={{ exact: l.to === "/quests" }}
                 activeProps={{ className: "bg-primary/15 text-foreground" }}
                 className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground"
               >

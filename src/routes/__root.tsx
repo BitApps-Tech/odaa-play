@@ -89,9 +89,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Odaa Play" },
       { property: "og:description", content: "Explore Oromia. Level up." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/odaa-logo.png" },
+      { property: "og:image", content: "/odaa-play-logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/odaa-logo.png" },
+      { name: "twitter:image", content: "/odaa-play-logo.png" },
     ],
     links: [
       {
@@ -102,10 +102,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
-      { rel: "icon", href: "/favicon.png", sizes: "32x32", type: "image/png" },
-      { rel: "icon", href: "/favicon-48.png", sizes: "48x48", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "icon", href: "/favicon.ico?v=odaa", sizes: "32x32", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png?v=odaa", sizes: "32x32", type: "image/png" },
+      { rel: "icon", href: "/favicon-48.png?v=odaa", sizes: "48x48", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=odaa", sizes: "180x180" },
     ],
   }),
   shellComponent: RootShell,
@@ -138,9 +138,7 @@ function AuthSplash() {
   return (
     <div className="grid min-h-screen place-items-center px-4">
       <div className="text-center">
-        <span className="mx-auto grid h-20 w-20 place-items-center overflow-hidden rounded-full bg-white shadow-panel ring-1 ring-border">
-          <OdaaLogo className="h-20 w-20" />
-        </span>
+        <OdaaLogo className="mx-auto h-36 w-32" />
         <p className="mt-4 text-sm text-muted-foreground">{t.brand.opening}</p>
       </div>
     </div>
@@ -162,7 +160,7 @@ function RootComponent() {
 
   let content: ReactNode;
   if (isLogin) {
-    content = sessionPhone ? <Navigate to="/" replace /> : <Outlet />;
+    content = sessionPhone ? <Navigate to="/quests" search={{}} replace /> : <Outlet />;
   } else if (sessionPhone === undefined) {
     content = <AuthSplash />;
   } else if (sessionPhone) {

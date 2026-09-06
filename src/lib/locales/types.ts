@@ -3,7 +3,7 @@ export type Locale = "en" | "am" | "om";
 export type AuthErrorCode = "invalid_phone" | "short_password" | "wrong_password";
 
 export type Messages = {
-  brand: { name: string; bureau: string; opening: string };
+  brand: { name: string; bureau: string; slogan: string; opening: string };
   nav: {
     dashboard: string;
     quests: string;

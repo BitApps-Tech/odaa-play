@@ -4,11 +4,12 @@ export const om: Messages = {
     brand: {
       name: "Odaa Play",
       bureau: "Biiroo Aadaa fi Tursizimii Oromiyaa",
+      slogan: "Baradhu, taphadhu, mo'adhu!",
       opening: "Odaa Play banamaa jira…",
     },
     nav: {
       dashboard: "Gabatee",
-      quests: "Qabsoowwan",
+      quests: "Taphoota",
       map: "Kaartaa tursizimii",
       heritage: "Aadaa",
       leaderboard: "Gabatee mo'ataa",
@@ -109,8 +110,8 @@ export const om: Messages = {
       featured: "Qabsoo filatame",
     },
     quests: {
-      eyebrow: "Mojuulii 01",
-      title: "Afaan fi gaaffii OCTB",
+      eyebrow: "Amma taphadhu",
+      title: "Taphoota",
       intro: "Dursa gosa tapha filadhu, sana booda taphadhu. Afaan Oromoo, taphoota fakkii, ykn gaaffii OCTB shaakali.",
       wordBuilder: "Jecha ijaaruu",
       wordSearchTitle: "Jecha barbaadi",

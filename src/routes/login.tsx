@@ -37,7 +37,7 @@ function LoginPage() {
     }
 
     void router.invalidate().then(() => {
-      void navigate({ to: "/", replace: true });
+      void navigate({ to: "/quests", search: {}, replace: true });
     });
   }
 
@@ -48,10 +48,11 @@ function LoginPage() {
         <ThemeSwitcher />
       </div>
       <div className="mb-8 text-center">
-        <span className="mx-auto grid h-24 w-24 place-items-center overflow-hidden rounded-full bg-white shadow-panel ring-1 ring-border">
-          <OdaaLogo className="h-24 w-24" />
-        </span>
-        <h1 className="mt-5 font-display text-3xl font-bold">{t.login.title}</h1>
+        <OdaaLogo className="mx-auto h-48 w-40" />
+        <h1 className="mt-4 font-display text-3xl font-bold text-gold">{t.login.title}</h1>
+        <p className="mt-1 text-[11px] font-semibold tracking-[0.18em] text-primary uppercase">
+          {t.brand.slogan}
+        </p>
         <p className="mt-2 text-sm text-muted-foreground">{t.login.subtitle}</p>
       </div>
 

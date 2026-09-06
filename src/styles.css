@@ -6,8 +6,7 @@
 
 /*
  * Odaa Play design system.
- * Light parchment default tokens, dark obsidian with .dark.
- * Oromia red primary, ochre gold rewards accent.
+ * Forest green + gold, matching the ODAA PLAY brand.
  */
 
 @theme inline {
@@ -55,30 +54,30 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.975 0.012 85);
-  --foreground: oklch(0.22 0.03 265);
-  --surface: oklch(0.995 0.006 85);
-  --card: oklch(1 0.004 85);
-  --card-foreground: oklch(0.22 0.03 265);
-  --popover: oklch(1 0.004 85);
-  --popover-foreground: oklch(0.22 0.03 265);
-  --primary: oklch(0.55 0.222 15.6);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.94 0.016 80);
-  --secondary-foreground: oklch(0.25 0.03 265);
-  --muted: oklch(0.93 0.014 80);
-  --muted-foreground: oklch(0.45 0.025 258);
-  --accent: oklch(0.94 0.02 75);
-  --accent-foreground: oklch(0.22 0.03 265);
-  --gold: oklch(0.68 0.15 74.5);
-  --gold-foreground: oklch(0.22 0.04 60);
-  --destructive: oklch(0.55 0.222 15.6);
+  --background: oklch(0.96 0.02 145);
+  --foreground: oklch(0.18 0.04 145);
+  --surface: oklch(0.99 0.01 145);
+  --card: oklch(0.995 0.008 145);
+  --card-foreground: oklch(0.18 0.04 145);
+  --popover: oklch(0.995 0.008 145);
+  --popover-foreground: oklch(0.18 0.04 145);
+  --primary: oklch(0.42 0.13 145);
+  --primary-foreground: oklch(0.99 0.01 145);
+  --secondary: oklch(0.93 0.03 145);
+  --secondary-foreground: oklch(0.2 0.04 145);
+  --muted: oklch(0.92 0.025 145);
+  --muted-foreground: oklch(0.4 0.03 145);
+  --accent: oklch(0.93 0.035 145);
+  --accent-foreground: oklch(0.18 0.04 145);
+  --gold: oklch(0.75 0.16 85);
+  --gold-foreground: oklch(0.22 0.04 80);
+  --destructive: oklch(0.5 0.18 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.22 0.03 265 / 12%);
-  --input: oklch(0.22 0.03 265 / 14%);
-  --ring: oklch(0.55 0.222 15.6);
-  --chart-1: oklch(0.55 0.222 15.6);
-  --chart-2: oklch(0.68 0.15 74.5);
+  --border: oklch(0.22 0.04 145 / 14%);
+  --input: oklch(0.22 0.04 145 / 16%);
+  --ring: oklch(0.5 0.14 145);
+  --chart-1: oklch(0.5 0.14 145);
+  --chart-2: oklch(0.75 0.16 85);
   --chart-3: oklch(0.55 0.1 195);
   --chart-4: oklch(0.55 0.14 145);
   --chart-5: oklch(0.55 0.14 300);
@@ -99,53 +98,53 @@
     0 18px 50px -24px color-mix(in oklab, var(--primary) 40%, transparent);
   --shadow-gold: 0 0 0 1px color-mix(in oklab, var(--gold) 32%, transparent),
     0 18px 45px -22px color-mix(in oklab, var(--gold) 40%, transparent);
-  --shadow-panel: 0 24px 60px -32px oklch(0.22 0.03 265 / 22%);
+  --shadow-panel: 0 24px 60px -32px oklch(0.18 0.04 145 / 22%);
   color-scheme: light;
 }
 
 .dark {
-  --background: oklch(0.16 0.021 265);
-  --foreground: oklch(1 0 0);
-  --surface: oklch(0.22 0.028 264);
-  --card: oklch(0.22 0.028 264);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.2 0.026 264);
-  --popover-foreground: oklch(1 0 0);
-  --primary: oklch(0.6 0.222 15.6);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.28 0.032 264);
-  --secondary-foreground: oklch(0.97 0.005 264);
-  --muted: oklch(0.27 0.03 264);
-  --muted-foreground: oklch(0.72 0.028 258);
-  --accent: oklch(0.32 0.04 264);
-  --accent-foreground: oklch(1 0 0);
-  --gold: oklch(0.78 0.16 74.5);
-  --gold-foreground: oklch(0.18 0.03 60);
-  --destructive: oklch(0.6 0.222 15.6);
+  --background: oklch(0.16 0.055 145);
+  --foreground: oklch(0.98 0.01 145);
+  --surface: oklch(0.2 0.05 145);
+  --card: oklch(0.21 0.05 145);
+  --card-foreground: oklch(0.98 0.01 145);
+  --popover: oklch(0.19 0.048 145);
+  --popover-foreground: oklch(0.98 0.01 145);
+  --primary: oklch(0.68 0.18 145);
+  --primary-foreground: oklch(0.14 0.04 145);
+  --secondary: oklch(0.26 0.05 145);
+  --secondary-foreground: oklch(0.95 0.015 145);
+  --muted: oklch(0.25 0.045 145);
+  --muted-foreground: oklch(0.78 0.03 145);
+  --accent: oklch(0.28 0.055 145);
+  --accent-foreground: oklch(0.98 0.01 145);
+  --gold: oklch(0.84 0.16 85);
+  --gold-foreground: oklch(0.18 0.04 80);
+  --destructive: oklch(0.62 0.18 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.6 0.222 15.6);
-  --chart-1: oklch(0.6 0.222 15.6);
-  --chart-2: oklch(0.78 0.16 74.5);
+  --border: oklch(0.84 0.16 85 / 18%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.84 0.16 85);
+  --chart-1: oklch(0.68 0.18 145);
+  --chart-2: oklch(0.84 0.16 85);
   --chart-3: oklch(0.7 0.13 195);
   --chart-4: oklch(0.65 0.16 145);
   --chart-5: oklch(0.68 0.17 300);
-  --glass-bg: color-mix(in oklab, var(--surface) 55%, transparent);
-  --glass-bg-strong: color-mix(in oklab, var(--surface) 82%, transparent);
+  --glass-bg: color-mix(in oklab, var(--surface) 62%, transparent);
+  --glass-bg-strong: color-mix(in oklab, var(--surface) 86%, transparent);
   --gradient-hero: linear-gradient(
     135deg,
-    color-mix(in oklab, var(--primary) 32%, transparent),
+    color-mix(in oklab, var(--primary) 28%, transparent),
     transparent 55%,
-    color-mix(in oklab, var(--gold) 24%, transparent)
+    color-mix(in oklab, var(--gold) 22%, transparent)
   );
   --gradient-gold: linear-gradient(
     120deg,
     var(--gold),
-    color-mix(in oklab, var(--gold) 60%, var(--primary))
+    color-mix(in oklab, var(--gold) 55%, var(--primary))
   );
-  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
-    0 18px 60px -24px color-mix(in oklab, var(--primary) 70%, transparent);
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--gold) 35%, transparent),
+    0 18px 60px -24px color-mix(in oklab, var(--primary) 55%, transparent);
   --shadow-gold: 0 0 0 1px color-mix(in oklab, var(--gold) 40%, transparent),
     0 18px 55px -22px color-mix(in oklab, var(--gold) 75%, transparent);
   --shadow-panel: 0 24px 70px -30px oklch(0 0 0 / 80%);
@@ -181,6 +180,38 @@
   50% {
     transform: translateY(-8px);
   }
+}
+
+.game-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 40%;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease,
+    ring-color 0.3s ease;
+}
+
+.game-card:hover {
+  box-shadow: var(--shadow-gold);
+  ring-color: color-mix(in oklab, var(--gold) 55%, transparent);
+}
+
+.game-card-shine {
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    color-mix(in oklab, var(--gold) 28%, transparent),
+    transparent 46%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.game-card:hover .game-card-shine {
+  opacity: 1;
 }
 
 @utility glass {
