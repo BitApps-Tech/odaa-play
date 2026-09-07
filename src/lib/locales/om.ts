@@ -131,6 +131,7 @@ export const om: Messages = {
         tryAgain: "Irra deebi'i",
       },
       chooseGame: "Tapha filadhu",
+      bannerAlt: "Odaa Play — Baradhu. Taphadhu. Mo'adhu. Beekumsa Itoophiyaa fi Oromiyaa.",
       backToGames: "Taphoota hunda",
       playGame: "Taphadhu",
       categories: {

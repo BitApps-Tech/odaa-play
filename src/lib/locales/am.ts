@@ -132,6 +132,7 @@ export const am: Messages = {
         tryAgain: "Try again",
       },
       chooseGame: "Choose a game",
+      bannerAlt: "Odaa Play — ተማር። ተጫወት። አሸንፍ።",
       backToGames: "All games",
       playGame: "Play",
       categories: {

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { RotateCcw } from "lucide-react";
 import { GameRound } from "./GameRound";
 import { SiteScene } from "./SiteScene";
@@ -54,7 +55,7 @@ export function JigsawPuzzle() {
   const photo = sitePhotos[photoId];
   const [src, setSrc] = useState(photo.fallback);
   const [progress, setProgress] = useState<Partial<Record<MapSiteType, number[]>>>({});
-  const [drag, setDrag] = useState<{ id: number; x: number; y: number } | null>(null);
+  const [drag, setDrag] = useState<{ id: number; x: number; y: number; ox: number; oy: number } | null>(null);
   const [hoverSlot, setHoverSlot] = useState<number | null>(null);
 
   const pieces = useMemo(() => makeJigsaw(ROWS, COLS, `jigsaw-${photoId}`), [photoId]);
@@ -86,7 +87,11 @@ export function JigsawPuzzle() {
     }
 
     function onMove(event: PointerEvent) {
-      setDrag({ id, x: event.clientX, y: event.clientY });
+      setDrag((current) =>
+        current && current.id === id
+          ? { ...current, x: event.clientX, y: event.clientY }
+          : current,
+      );
       setHoverSlot(slotAt(event.clientX, event.clientY));
     }
 
@@ -133,7 +138,14 @@ export function JigsawPuzzle() {
   function onPointerDown(event: React.PointerEvent, id: number) {
     if (placed.includes(id)) return;
     event.preventDefault();
-    setDrag({ id, x: event.clientX, y: event.clientY });
+    const rect = event.currentTarget.getBoundingClientRect();
+    setDrag({
+      id,
+      x: event.clientX,
+      y: event.clientY,
+      ox: event.clientX - rect.left,
+      oy: event.clientY - rect.top,
+    });
   }
 
   return (
@@ -185,7 +197,7 @@ export function JigsawPuzzle() {
                 <div
                   key={piece.id}
                   data-jigsaw-slot={piece.id}
-                  className={`relative ${
+                  className={`relative h-full w-full ${
                     !isPlaced && hoverSlot === piece.id ? "z-10" : ""
                   }`}
                 >
@@ -233,19 +245,21 @@ export function JigsawPuzzle() {
         </div>
       </div>
 
-      {drag && (
-        <div
-          className="pointer-events-none fixed z-50 h-16 w-16 -translate-x-1/2 -translate-y-1/2"
-          style={{ left: drag.x, top: drag.y }}
-        >
-          <PieceFace
-            piece={pieces[drag.id]!}
-            src={src}
-            clipPrefix={`drag-${photoId}`}
-            className="h-full w-full drop-shadow-lg"
-          />
-        </div>
-      )}
+      {drag &&
+        createPortal(
+          <div
+            className="pointer-events-none fixed z-[200] h-14 w-14"
+            style={{ left: drag.x - drag.ox, top: drag.y - drag.oy }}
+          >
+            <PieceFace
+              piece={pieces[drag.id]!}
+              src={src}
+              clipPrefix={`drag-${photoId}`}
+              className="h-full w-full drop-shadow-lg"
+            />
+          </div>,
+          document.body,
+        )}
 
       <div className="mt-3 flex items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">{fill(g.jigsawPieces, { n: tray.length })}</p>

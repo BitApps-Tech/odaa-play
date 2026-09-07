@@ -131,6 +131,7 @@ export const en: Messages = {
         tryAgain: "Try again",
       },
       chooseGame: "Choose a game",
+      bannerAlt: "Odaa Play — Learn. Play. Win. Knowledge about Ethiopia and Oromia.",
       backToGames: "All games",
       playGame: "Play",
       categories: {

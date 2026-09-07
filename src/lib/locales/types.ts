@@ -107,6 +107,7 @@ export type Messages = {
       tryAgain: string;
     };
     chooseGame: string;
+    bannerAlt: string;
     backToGames: string;
     playGame: string;
     categories: {

@@ -13,6 +13,7 @@ import { Page } from "@/components/gadaa/Page";
 import { PictorialGames } from "@/components/gadaa/PictorialGames";
 import { FactCheck } from "@/components/gadaa/FactCheck";
 import { GameCard } from "@/components/gadaa/GameCard";
+import { GamesBanner } from "@/components/gadaa/GamesBanner";
 import { GameRound } from "@/components/gadaa/GameRound";
 import { WordSearch } from "@/components/gadaa/WordSearch";
 import { puzzles, trivia } from "@/lib/gadaa-data";
@@ -267,7 +268,13 @@ function Quests() {
   const { game } = Route.useSearch();
 
   return (
-    <Page eyebrow={t.quests.eyebrow} title={t.quests.title} intro={t.quests.intro} source={t.quests.source}>
+    <Page
+      eyebrow={t.quests.eyebrow}
+      title={t.quests.title}
+      intro={t.quests.intro}
+      source={t.quests.source}
+      hero={<GamesBanner />}
+    >
       {game ? (
         <section>
           <div className="flex flex-wrap items-center justify-between gap-3">
